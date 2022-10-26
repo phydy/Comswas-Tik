@@ -1,8 +1,8 @@
-use cosmwasm_schema::cw_serde;
+use cosmwasm_schema::{cw_serde, QueryResponses};
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 
-use crate::state::Game;
+use crate::state::{Game, VectorVeiw};
 
 #[cw_serde]
 pub struct InstantiateMsg {}
@@ -13,11 +13,15 @@ pub enum ExecuteMsg {
     PlayGame { game_id: u32, cell: (usize, usize) },
 }
 
-#[derive(Serialize, Deserialize, JsonSchema)]
+#[derive(QueryResponses, Serialize, Deserialize, JsonSchema)]
 pub enum QueryMsg {
+    #[returns(GameInfor)]
     GetGameInfor { game_id: u32 },
+    #[returns(u32)]
     GameCount {},
+    #[returns(VectorVeiw)]
     EmptyCells { game_id: u32 },
+    #[returns(u8)]
     NextPlayer { game_id: u32 },
 }
 
